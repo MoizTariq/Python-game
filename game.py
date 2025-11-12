@@ -1,7 +1,7 @@
 """ 
 I acknowledge the use of
 Microsoft Copilot (version GPT-4, Microsoft, https://copilot.microsoft.com/)
-to create the code in this file 
+to create the code in this file.
 
 Guess the Number Game
 ---------------------
@@ -11,21 +11,39 @@ Includes input validation, replay option, and scoring system.
 
 import random
 
+def choose_difficulty():
+    """Ask the user to choose a difficulty level."""
+    print("\nSelect difficulty level:")
+    print("1. Easy (1–50)")
+    print("2. Medium (1–100)")
+    print("3. Hard (1–200)")
+
+    while True:
+        choice = input("Enter 1, 2, or 3: ").strip()
+        if choice == "1":
+            return 1, 50
+        elif choice == "2":
+            return 1, 100
+        elif choice == "3":
+            return 1, 200
+        else:
+            print("⚠️ Please choose a valid option (1, 2, or 3).")
+
 
 def play_game():
     """Plays one round of Guess the Number."""
-    number_to_guess = random.randint(1, 100)
+    low, high = choose_difficulty()
+    number_to_guess = random.randint(low, high)
     attempts = 0
 
-    print("\n🎲 Welcome to Guess the Number!")
-    print("I'm thinking of a number between 1 and 100.")
+    print(f"\n🎲 Welcome to Guess the Number ({low}–{high})!")
+    print(f"I'm thinking of a number between {low} and {high}.")
 
     while True:
-        # Validate user input
         try:
             guess = int(input("Enter your guess: "))
-            if not 1 <= guess <= 100:
-                print("⚠️ Please guess a number between 1 and 100.")
+            if not low <= guess <= high:
+                print(f"⚠️ Please guess a number between {low} and {high}.")
                 continue
         except ValueError:
             print("❌ Invalid input! Please enter a valid number.")
@@ -33,7 +51,6 @@ def play_game():
 
         attempts += 1
 
-        # Compare guess to target number
         if guess < number_to_guess:
             print("Too low! Try again.")
         elif guess > number_to_guess:
@@ -57,6 +74,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
